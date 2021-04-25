@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using KanbanBoard.Models;
 using KanbanBoard.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
@@ -39,7 +40,9 @@ namespace KanbanBoard
                 .AddDefaultUI()
                 .AddDefaultTokenProviders();
             services.AddControllersWithViews();
-            services.AddTransient<IEmailSender, EmailService>();
+            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.Configure<SMSoptions>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -10,18 +10,27 @@ namespace KanbanBoard.Models
 {
     public class KanbanTask
     {
+        [Key]
+        public int Id { get; set; }
+
         [Required]
         public string Title { get; set; }
 
         [Required]
         public string Description { get; set; }
 
+        [Required]
+        public int Time { get; set; }
+
+        [Required]
+        public string Movement { get; set; }
+
         [ForeignKey("ResponsibleUser")]
-        public int ResponsibleUserRefId { get; set; }
+        public string ResponsibleUserRefId { get; set; }
         public IdentityUser ResponsibleUser { get; set; }
 
         [ForeignKey("Owner")]
-        public int OwnerRefId { get; set; }
+        public string OwnerRefId { get; set; }
         public IdentityUser Owner { get; set; }
     }
 }

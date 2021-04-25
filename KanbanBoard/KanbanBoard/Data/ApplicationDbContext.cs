@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using KanbanBoard.Models;
 
 namespace KanbanBoard.Data
 {
@@ -12,5 +13,7 @@ namespace KanbanBoard.Data
             : base(options)
         {
         }
+
+        public DbSet<KanbanTask> KanbanTasks { get; set; }
     }
 }

@@ -28,7 +28,9 @@ namespace KanbanBoard
                     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     await ContextSeed.SeedRolesAsync(userManager, roleManager);
-                    await ContextSeed.SeedSuperAdminAsync(userManager, roleManager);
+                    await ContextSeed.SeedSuperAdminAsync(userManager);
+                    await ContextSeed.SeedIdentityUsersAsync(userManager);
+                    await ContextSeed.SeedKanbanTasksAsync(new KanbanTaskManager(context));
                 }
                 catch (Exception ex)
                 {
