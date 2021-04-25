@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KanbanBoard.Data;
+using KanbanBoard.Models;
 using KanbanBoard.Utility;
 using Microsoft.AspNetCore.Authorization;
 
@@ -23,6 +24,16 @@ namespace KanbanBoard.Controllers
         public IActionResult Index()
         {
             return View(TaskManager);
+        }
+
+        public IActionResult Edit(KanbanTask task)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IActionResult Delete(KanbanTask task)
+        {
+            throw new NotImplementedException();
         }
     }
 }

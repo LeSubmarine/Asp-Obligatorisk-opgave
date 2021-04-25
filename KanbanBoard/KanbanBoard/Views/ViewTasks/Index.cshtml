@@ -1,8 +1,10 @@
-﻿@model KanbanBoard.Utility.KanbanTaskManager
+﻿@using System.Security.Cryptography.X509Certificates
+@model KanbanBoard.Utility.KanbanTaskManager
 @{
     ViewData["Title"] = "View Kanban tasks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <table class="table table-striped">
     <div class="row">
         <div class="col-sm-4">
@@ -26,8 +28,8 @@
                         }
                     </ul>
                     <div class="card-body">
-                        <a href="#" class="card-link">Edit</a>
-                        <a href="#" class="card-link">Delete</a>
+                        <a asp-action="Edit" asp-route-task="@role" class="card-link">Edit</a>
+                        <a asp-action="Delete" asp-route-task="@role" class="card-link">Delete</a>
                     </div>
                 </div>
             }
@@ -53,8 +55,8 @@
                         }
                     </ul>
                     <div class="card-body">
-                        <a href="#" class="card-link">Edit</a>
-                        <a href="#" class="card-link">Delete</a>
+                        <a asp-action="Edit" asp-route-task="@role" class="card-link">Edit</a>
+                        <a asp-action="Delete" asp-route-task="@role" class="card-link">Delete</a>
                     </div>
                 </div>
             }
@@ -80,8 +82,8 @@
                         }
                     </ul>
                     <div class="card-body">
-                        <a href="#" class="card-link">Edit</a>
-                        <a href="#" class="card-link">Delete</a>
+                        <a asp-action="Edit" asp-route-task="@role" class="card-link">Edit</a>
+                        <a asp-action="Delete" asp-route-task="@role" class="card-link">Delete</a>
                     </div>
                 </div>
             }
