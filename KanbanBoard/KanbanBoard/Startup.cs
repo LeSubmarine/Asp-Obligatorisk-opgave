@@ -14,6 +14,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using KanbanBoard.Models;
 using KanbanBoard.Utility;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace KanbanBoard
@@ -43,6 +45,16 @@ namespace KanbanBoard
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.Configure<SMSoptions>(Configuration);
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(
+                    "DeletePolicy",
+                    policy =>
+                    {
+                        policy.RequireClaim("Id");
+                        policy.RequireRole("Organizer,Team Player");
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -11,6 +11,7 @@ namespace KanbanBoard.Utility
     {
         public static async Task SeedRolesAsync(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
         {
+            await roleManager.CreateAsync(new IdentityRole("None"));
             await roleManager.CreateAsync(new IdentityRole("Organizer"));
             await roleManager.CreateAsync(new IdentityRole("Team Player"));
             await roleManager.CreateAsync(new IdentityRole("Contributor"));
