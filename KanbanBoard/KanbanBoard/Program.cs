@@ -22,21 +22,21 @@ namespace KanbanBoard
             {
                 var services = scope.ServiceProvider;
                 var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-                try
-                {
+                //try
+                //{
                     var context = services.GetRequiredService<ApplicationDbContext>();
                     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
                     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                     await ContextSeed.SeedRolesAsync(userManager, roleManager);
                     await ContextSeed.SeedSuperAdminAsync(userManager);
                     await ContextSeed.SeedIdentityUsersAsync(userManager);
-                    await ContextSeed.SeedKanbanTasksAsync(new KanbanTaskManager(context));
-                }
-                catch (Exception ex)
-                {
-                    var logger = loggerFactory.CreateLogger<Program>();
-                    logger.LogError(ex, "An error occurred seeding the DB.");
-                }
+                    await ContextSeed.SeedKanbanTasksAsync(new KanbanTaskManager(context),userManager);
+                //}
+                //catch (Exception ex)
+                //{
+                //    var logger = loggerFactory.CreateLogger<Program>();
+                //    logger.LogError(ex, "An error occurred seeding the DB.");
+                //}
             }
             host.Run();
         }

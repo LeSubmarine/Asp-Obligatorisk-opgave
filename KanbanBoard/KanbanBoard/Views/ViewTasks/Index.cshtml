@@ -3,35 +3,97 @@
     ViewData["Title"] = "View Kanban tasks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>Role Manager</h1>
-@*<form method="post" asp-action="AddRole" asp-controller="RoleManager">
-    <div class="input-group">
-        <input name="roleName" class="form-control w-25">
-        <span class="input-group-btn">
-            <button class="btn btn-info">Add New Role</button>
-        </span>
-    </div>
-</form>*@
 <table class="table table-striped">
-    <thead>
-        <tr>
-            <th>Title</th>
-            <th>Description</th>
-            <th>Responsible user</th>
-            <th>Creator</th>
-            <th>Time</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var role in Model.Tasks)
-        {
-            <tr>
-                <td>@role.Title</td>
-                <td>@role.Description</td>
-                <td>@role.ResponsibleUser</td>
-                <td>@role.Owner</td>
-                <td>@role.Time</td>
-            </tr>
-        }
-    </tbody>
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>TO DO</h3>
+            @foreach (var role in Model.Tasks.Where(T => T.Movement.Contains("To Do")))
+            {
+                <div class="card mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@role.Title</h5>
+                        <p class="card-text">@role.Description</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Time estimated: @role.Time</li>
+                        @if (!(role.ResponsibleUser is null))
+                        {
+                            <li class="list-group-item">Responsible user: @role.ResponsibleUser.UserName</li>
+                        }
+                        @if (!(role.Owner is null))
+                        {
+                            <li class="list-group-item">Creator: @role.Owner.UserName</li>
+                        }
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Edit</a>
+                        <a href="#" class="card-link">Delete</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-sm-4">
+            <h3>DOING</h3>
+            @foreach (var role in Model.Tasks.Where(T => T.Movement.Contains("Doing")))
+            {
+                <div class="card mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@role.Title</h5>
+                        <p class="card-text">@role.Description</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Time estimated: @role.Time</li>
+                        @if (!(role.ResponsibleUser is null))
+                        {
+                            <li class="list-group-item">Responsible user: @role.ResponsibleUser.UserName</li>
+                        }
+                        @if (!(role.Owner is null))
+                        {
+                            <li class="list-group-item">Creator: @role.Owner.UserName</li>
+                        }
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Edit</a>
+                        <a href="#" class="card-link">Delete</a>
+                    </div>
+                </div>
+            }
+        </div>
+        <div class="col-sm-4">
+            <h3>DONE</h3>
+            @foreach (var role in Model.Tasks.Where(T => T.Movement.Contains("Done")))
+            {
+                <div class="card mb-3" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@role.Title</h5>
+                        <p class="card-text">@role.Description</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Time estimated: @role.Time</li>
+                        @if (!(role.ResponsibleUser is null))
+                        {
+                            <li class="list-group-item">Responsible user: @role.ResponsibleUser.UserName</li>
+                        }
+                        @if (!(role.Owner is null))
+                        {
+                            <li class="list-group-item">Creator: @role.Owner.UserName</li>
+                        }
+                    </ul>
+                    <div class="card-body">
+                        <a href="#" class="card-link">Edit</a>
+                        <a href="#" class="card-link">Delete</a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+    
 </table>
+@* <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src=".../100px180/" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">Card title</h5>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div> *@

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using KanbanBoard.Models;
@@ -60,27 +61,29 @@ namespace KanbanBoard.Utility
                 List<string> roles = new List<string>()
                 {
                     "Organizer",
-                    "TeamPlayer",
-                    "Contributer",
-                    "Contributer",
-                    "Contributer",
-                    "Contributer",
+                    "Team Player",
+                    "Contributor",
+                    "Contributor",
+                    "Contributor",
+                    "Contributor",
                     "Observer"
                 };
                 for (int i = 0; i < names.Count; i++)
                 {
-                    IdentityUser newUser = new IdentityUser(names[i]);
-                    await userManager.CreateAsync(newUser);
+                    IdentityUser newUser = new IdentityUser{UserName = names[i],Email = $"{names[i]}@gmail.com"};
+                    await userManager.CreateAsync(newUser,"YEA!123€€€aaasss");
                     await userManager.AddToRoleAsync(newUser, roles[i]); 
                 }
             }
         }
 
-        public static async Task SeedKanbanTasksAsync(KanbanTaskManager kanbanTaskManager)
+        public static async Task SeedKanbanTasksAsync(KanbanTaskManager kanbanTaskManager, UserManager<IdentityUser> userManager)
         {
             //Seed Default Tasks
-            if (kanbanTaskManager.Tasks.Count <= 0)
+            int noOfTask = 15;
+            if (kanbanTaskManager.Tasks.Count <= 15)
             {
+                noOfTask = 15 - kanbanTaskManager.Tasks.Count;
                 List<string> descriptions = new List<string>()
                 {
                     "GOIS WE NEED TO DO DIS BUGGY DOGNK",
@@ -97,23 +100,36 @@ namespace KanbanBoard.Utility
                     "Thirduis bling blong",
                     "Sværgg dig det skal laves",
                     "WOw du mente det?",
-                    "Ej dig ikke kigge i min seeds.. )':"
+                    "yoyoyo skreeerr dergig?",
+                    "Litteral stroke maybe?",
+                    "Ej dig, ikke kigge i min seeds.. )':"
                 };
                 List<string> movement = new List<string>()
                 {
                     "To Do",
                     "Doing",
-                    "Done",
-                    "Done",
-                    "To Do",
-                    "Doing"
+                    "Done"
                 };
-                for (int i = 0; i < 6; i++)
+                Random rnd = new Random(DateTime.Now.Millisecond);
+                var users = userManager.Users.Where(u => !u.UserName.Contains("Henrik@gmail.com")).ToArray();
+                for (int i = 0; i < noOfTask; i++)
                 {
+                    IdentityUser user1 = users.ToArray()[rnd.Next(users.Length)];
+                    IdentityUser user2 = users.ToArray()[rnd.Next(users.Length)];
+                    IdentityUser responsibleDude = rnd.Next(10) > 5 ? null : user2;
+
                     await kanbanTaskManager.CreateTaskAsync(new KanbanTask
                     {
-                        
-                    })
+                        Description = descriptions[rnd.Next(6)],
+                        //Id = i,
+                        Movement = movement[rnd.Next(3)],
+                        Owner = user1,
+                        OwnerRefId = user1.Id,
+                        ResponsibleUser = responsibleDude,
+                        ResponsibleUserRefId = responsibleDude?.Id,
+                        Time = rnd.Next(21),
+                        Title = titles[rnd.Next(6)]
+                    });
                 }
             }
         }

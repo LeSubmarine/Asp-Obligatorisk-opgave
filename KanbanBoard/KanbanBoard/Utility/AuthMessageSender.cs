@@ -5,7 +5,6 @@ using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using System.Threading.Tasks;
 using KanbanBoard.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 
