@@ -90,7 +90,7 @@ namespace KanbanBoard.Areas.Identity.Pages.Account
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
-                    _userManager.AddToRoleAsync(user, "None");
+                    await _userManager.AddToRoleAsync(_userManager.FindByEmailAsync(Input.Email).Result, Input.Role);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
                     var callbackUrl = Url.Page(
