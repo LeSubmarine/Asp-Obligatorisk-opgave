@@ -13,59 +13,70 @@
         </div>
         <div class="card-body form-check m-1">
             <h5 class="card-title">Title: <input asp-for="@Model.Title" /></h5>
-            <div class="row">
-                <div class="col-sm-4">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><p class="card-text">Description:</p></li>
-                        <li class="list-group-item">Time estimated:</li>
-                        <li class="list-group-item">Category:</li>
-                        <li class="list-group-item">
-                            <label class="form-check-label" asp-for="@Model.ResponsibleUser">
-                                @(Model.ResponsibleUser is null ? "Responsible user" : Model.ResponsibleUser.ToString()):
-                            </label>
-                        </li>
-                    </ul>
-                </div>
-                <div class="col-sm-4">
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item"><p class="card-text"><input asp-for="@Model.Description" /></p></li>
-                        <li class="list-group-item"><input asp-for="@Model.Time" /></li>
-                        <li class="list-group-item"><input asp-for="@Model.Movement" /></li>
-                        <li class="list-group-item">
-                            @Html.DropDownList("Users", (List<SelectListItem>)ViewBag.Users)
-                        </li>
-                    </ul>
-                </div>
-            </div>
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>Description:</th>
+                        <td><p class="card-text"><input asp-for="@Model.Description" /></p></td>
+                    </tr>
+                    <tr>
+                        <th>Time estimated:</th>
+                        <td><p class="card-text"><input asp-for="@Model.Time" /></p></td>
+                    </tr>
+                    <tr>
+                        <th>Category:</th>
+                        <td>@Html.DropDownList("Movement", new List<SelectListItem>  
+                                                 {   new SelectListItem{ Text="To Do", Value = "To Do" },  
+                                                     new SelectListItem{ Text="Doing", Value = "Doing" },  
+                                                     new SelectListItem{ Text="Done", Value = "Done" } }) 
+                        </td>
+                    </tr>
+                    <tr>
+                        <th><label class="form-check-label" asp-for="@Model.ResponsibleUser">
+                            @(Model.ResponsibleUser is null ? "Responsible user" : Model.ResponsibleUser.ToString()):
+                        </label></th>
+                        <td> @Html.DropDownList("Users", (List<SelectListItem>)ViewBag.Users)</td>
+                    </tr>
+                </tbody>
+            </table>
             <div asp-validation-summary="All" class="text-danger"></div>
         </div>
         <div class="card-footer">
             <input type="submit" value="Update" class="btn btn-primary"
                    style="width:auto" />
-            <a asp-action="Index" asp-route-id="@ViewBag.userId"
+            <a asp-action="Edit" asp-route-id="@ViewBag.userId"
                class="btn btn-primary" style="width:auto">Cancel</a>
         </div>
     </div>
 </form>
 
-@* <div class="card mb-3" style="width: 18rem;">
-        <div class="card-body">
-            <h5 class="card-title">@role.Title</h5>
-            <p class="card-text">@role.Description</p>
-        </div>
-        <ul class="list-group list-group-flush">
-            <li class="list-group-item">Time estimated: @role.Time</li>
-            @if (!(role.ResponsibleUser is null))
-            {
-                <li class="list-group-item">Responsible user: @role.ResponsibleUser.UserName</li>
-            }
-            @if (!(role.Owner is null))
-            {
-                <li class="list-group-item">Creator: @role.Owner.UserName</li>
-            }
-        </ul>
-        <div class="card-body">
-            <a asp-action="Edit" asp-route-taskId="@role.Id" class="card-link">Edit</a>
-            <a asp-action="Delete" asp-route-taskId="@role.Id" class="card-link">Delete</a>
-        </div>
-    </div> *@
+@*<table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">First</th>
+          <th scope="col">Last</th>
+          <th scope="col">Handle</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </table> *@
