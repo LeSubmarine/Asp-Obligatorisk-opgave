@@ -13,6 +13,9 @@
         </div>
         <div class="card-body form-check m-1">
             <h5 class="card-title">Title: <input asp-for="@Model.Title" /></h5>
+            <input type="hidden" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.ResponsibleUser" />
+            <input type="hidden" asp-for="@Model.Owner" />
             <table class="table table-striped">
                 <tbody>
                     <tr>
@@ -35,7 +38,7 @@
                         <th><label class="form-check-label" asp-for="@Model.ResponsibleUser">
                             @(Model.ResponsibleUser is null ? "Responsible user" : Model.ResponsibleUser.ToString()):
                         </label></th>
-                        <td> @Html.DropDownList("Users", (List<SelectListItem>)ViewBag.Users)</td>
+                        <td> @Html.DropDownList("ResponsibleUser", (List<SelectListItem>)ViewBag.Users)</td>
                     </tr>
                 </tbody>
             </table>
@@ -44,7 +47,7 @@
         <div class="card-footer">
             <input type="submit" value="Update" class="btn btn-primary"
                    style="width:auto" />
-            <a asp-action="Edit" asp-route-id="@ViewBag.userId"
+            <a asp-action="Index" asp-route-id="@ViewBag.userId"
                class="btn btn-primary" style="width:auto">Cancel</a>
         </div>
     </div>

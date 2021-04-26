@@ -45,6 +45,11 @@ namespace KanbanBoard.Utility
 
         public void UpdateTask(KanbanTask task)
         {
+            KanbanTask oldTask = _context.KanbanTasks.Find(task.Id);
+            foreach (var prop in oldTask.GetType().GetProperties())
+            {
+                prop.SetValue(oldTask, prop.GetValue(task));
+            }
             _context.KanbanTasks.Update(task);
             _context.SaveChanges();
         }

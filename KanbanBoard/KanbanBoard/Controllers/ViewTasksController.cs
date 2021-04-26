@@ -48,7 +48,7 @@ namespace KanbanBoard.Controllers
                 {
                     return View(TaskManager.Tasks.Find(t => t.Id == taskId));
                 }
-                throw new Exception();
+                return RedirectToAction("Index");
             }
 
 
@@ -59,14 +59,18 @@ namespace KanbanBoard.Controllers
         [HttpPost]
         public IActionResult Edit(KanbanTask task)
         {
+
+            task.OwnerRefId = task.Owner?.Id;
+            task.ResponsibleUserRefId = task.ResponsibleUser?.Id;
             if (!(User.IsInRole("Organizer") || (User.IsInRole("Team Player"))))
             {
-                if (_signInContext.UserManager.GetUserId(User) == TaskManager.Tasks.Where(a => a.Id == task.Id)?.First()?.OwnerRefId)
+                if (!(_signInContext.UserManager.GetUserId(User) == TaskManager.Tasks.Where(a => a.Id == task.Id)?.First()?.OwnerRefId))
                 {
-                    throw new FormatException();
+                    return RedirectToAction("Index");
                 }
-                throw new Exception();
             }
+
+            
 
             TaskManager.UpdateTask(task);
 
