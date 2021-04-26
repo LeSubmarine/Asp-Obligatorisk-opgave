@@ -13,17 +13,30 @@
         </div>
         <div class="card-body form-check m-1">
             <h5 class="card-title">Title: <input asp-for="@Model.Title" /></h5>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item"><p class="card-text">Description: <input asp-for="@Model.Description" /></p></li>
-                <li class="list-group-item">Time estimated: <input asp-for="@Model.Time" /></li>
-                <li class="list-group-item">Category: <input asp-for="@Model.Movement" /></li>
-                <li class="list-group-item">
-                    <label class="form-check-label" asp-for="@Model.ResponsibleUser">
-                        @Model.ResponsibleUser:
-                    </label>
-                    @Html.DropDownList("Users", (List<SelectListItem>)ViewBag.Users)
-                </li>
-            </ul>
+            <div class="row">
+                <div class="col-sm-4">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><p class="card-text">Description:</p></li>
+                        <li class="list-group-item">Time estimated:</li>
+                        <li class="list-group-item">Category:</li>
+                        <li class="list-group-item">
+                            <label class="form-check-label" asp-for="@Model.ResponsibleUser">
+                                @(Model.ResponsibleUser is null ? "Responsible user" : Model.ResponsibleUser.ToString()):
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-sm-4">
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item"><p class="card-text"><input asp-for="@Model.Description" /></p></li>
+                        <li class="list-group-item"><input asp-for="@Model.Time" /></li>
+                        <li class="list-group-item"><input asp-for="@Model.Movement" /></li>
+                        <li class="list-group-item">
+                            @Html.DropDownList("Users", (List<SelectListItem>)ViewBag.Users)
+                        </li>
+                    </ul>
+                </div>
+            </div>
             <div asp-validation-summary="All" class="text-danger"></div>
         </div>
         <div class="card-footer">
@@ -34,17 +47,7 @@
         </div>
     </div>
 </form>
-<ul class="list-group list-group-flush">
-    <li class="list-group-item"><p class="card-text">Description: <input asp-for="@Model.Description" /></p></li>
-    <li class="list-group-item">Time estimated: <input asp-for="@Model.Time" /></li>
-    <li class="list-group-item">Category: <input asp-for="@Model.Movement" /></li>
-    <li class="list-group-item">
-        <label class="form-check-label" asp-for="@Model.ResponsibleUser">
-            @Model.ResponsibleUser
-        </label>
-        @Html.DropDownList("Users", (List<SelectListItem>)ViewBag.Users)
-    </li>
-</ul>
+
 @* <div class="card mb-3" style="width: 18rem;">
         <div class="card-body">
             <h5 class="card-title">@role.Title</h5>
