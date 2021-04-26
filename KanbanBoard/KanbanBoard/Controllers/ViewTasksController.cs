@@ -36,11 +36,11 @@ namespace KanbanBoard.Controllers
         }
 
         [Authorize(Roles = "Team Player,Contributor,Organizer,UltraAdmin")]
-        public IActionResult Delete(KanbanTask task)
+        public IActionResult Delete(int taskId)
         {
             if (!(User.IsInRole("Organizer") || (User.IsInRole("Team Player"))))
             {
-                if (HttpContext.User.Claims.Where(u => u.Type == "Id").Select(u => u.Value == task.OwnerRefId).Any())
+                if (_signInContext.UserManager.GetUserId(User) == TaskManager.Tasks.Where(a => a.Id == taskId).First().OwnerRefId)
                 {
                     throw new FormatException();
                 }
