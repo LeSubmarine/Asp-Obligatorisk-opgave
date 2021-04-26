@@ -9,6 +9,7 @@ using KanbanBoard.Models;
 using KanbanBoard.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace KanbanBoard.Controllers
 {
@@ -35,15 +36,23 @@ namespace KanbanBoard.Controllers
         [HttpGet]
         public IActionResult Edit(int taskId)
         {
+            ViewBag.Users = new List<SelectListItem>();
+
+            foreach (var user in _context.Users)
+            {
+                ViewBag.Users.Add(new SelectListItem(user.Email, user.Id));
+            }
             if (!(User.IsInRole("Organizer") || (User.IsInRole("Team Player"))))
             {
                 if (_signInContext.UserManager.GetUserId(User) == TaskManager.Tasks.Where(a => a.Id == taskId)?.First()?.OwnerRefId)
                 {
-                    throw new FormatException();
+                    return View(TaskManager.Tasks.Find(t => t.Id == taskId));
                 }
                 throw new Exception();
             }
-            throw new NotImplementedException();
+
+
+            return View(TaskManager.Tasks.Find(t => t.Id == taskId));
         }
 
         [Authorize(Roles = "Team Player,Contributor,Organizer,UltraAdmin")]
