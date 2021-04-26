@@ -36,12 +36,8 @@ namespace KanbanBoard.Controllers
         [HttpGet]
         public IActionResult Edit(int taskId)
         {
-            ViewBag.Users = new List<SelectListItem>();
+            ViewBag.Users = _context.Users.ToArray();
 
-            foreach (var user in _context.Users)
-            {
-                ViewBag.Users.Add(new SelectListItem(user.Email, user.Id));
-            }
             if (!(User.IsInRole("Organizer") || (User.IsInRole("Team Player"))))
             {
                 if (_signInContext.UserManager.GetUserId(User) == TaskManager.Tasks.Where(a => a.Id == taskId)?.First()?.OwnerRefId)
@@ -57,22 +53,24 @@ namespace KanbanBoard.Controllers
 
         [Authorize(Roles = "Team Player,Contributor,Organizer,UltraAdmin")]
         [HttpPost]
-        public IActionResult Edit(KanbanTask task)
+        public IActionResult Edit([FromForm] KanbanTask task)
         {
-
-            task.OwnerRefId = task.Owner?.Id;
-            task.ResponsibleUserRefId = task.ResponsibleUser?.Id;
+            task.ResponsibleUser = _context.Users.Find(task.ResponsibleUser?.Id) ?? task.ResponsibleUser;
             if (!(User.IsInRole("Organizer") || (User.IsInRole("Team Player"))))
             {
-                if (!(_signInContext.UserManager.GetUserId(User) == TaskManager.Tasks.Where(a => a.Id == task.Id)?.First()?.OwnerRefId))
+                if (_signInContext.UserManager.GetUserId(User) != TaskManager.Tasks.Where(a => a.Id == task.Id)?.First()?.OwnerRefId)
                 {
                     return RedirectToAction("Index");
                 }
             }
 
-            
+            KanbanTask oldTask = TaskManager.Tasks.Find(t => t.Id == task.Id);
+            foreach (var prop in oldTask.GetType().GetProperties())
+            {
+                prop.SetValue(oldTask, prop.GetValue(task));
+            }
 
-            TaskManager.UpdateTask(task);
+            TaskManager.UpdateTask(oldTask);
 
             return RedirectToAction("Index");
         }
