@@ -8,23 +8,22 @@
 <form method="post">
     <div class="card">
         <div class="card-header">
-            <h2>Edit Task</h2>
-            Edit task for @Model.Title.
+            <h2>Edit Task:</h2>
+            <h3>@Model.Title</h3>
         </div>
-        <div class="card-body">
-            <div class="form-check m-1">
-                <input asp-for="@Model.Title" />
-                <input asp-for="@Model.Description" />
-                <input asp-for="@Model.Movement" />
-                <label class="form-check-label" asp-for="@Model.ResponsibleUser">
-                    @Model.ResponsibleUser
-                </label>
-                @Html.DropDownList("Users", (List<SelectListItem>)ViewBag.Users)
-                
-                
-                <input asp-for="@Model.Owner" class="form-check-input" />
-                
-            </div>
+        <div class="card-body form-check m-1">
+            <h5 class="card-title">Title: <input asp-for="@Model.Title" /></h5>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><p class="card-text">Description: <input asp-for="@Model.Description" /></p></li>
+                <li class="list-group-item">Time estimated: <input asp-for="@Model.Time" /></li>
+                <li class="list-group-item">Category: <input asp-for="@Model.Movement" /></li>
+                <li class="list-group-item">
+                    <label class="form-check-label" asp-for="@Model.ResponsibleUser">
+                        @Model.ResponsibleUser:
+                    </label>
+                    @Html.DropDownList("Users", (List<SelectListItem>)ViewBag.Users)
+                </li>
+            </ul>
             <div asp-validation-summary="All" class="text-danger"></div>
         </div>
         <div class="card-footer">
@@ -35,3 +34,35 @@
         </div>
     </div>
 </form>
+<ul class="list-group list-group-flush">
+    <li class="list-group-item"><p class="card-text">Description: <input asp-for="@Model.Description" /></p></li>
+    <li class="list-group-item">Time estimated: <input asp-for="@Model.Time" /></li>
+    <li class="list-group-item">Category: <input asp-for="@Model.Movement" /></li>
+    <li class="list-group-item">
+        <label class="form-check-label" asp-for="@Model.ResponsibleUser">
+            @Model.ResponsibleUser
+        </label>
+        @Html.DropDownList("Users", (List<SelectListItem>)ViewBag.Users)
+    </li>
+</ul>
+@* <div class="card mb-3" style="width: 18rem;">
+        <div class="card-body">
+            <h5 class="card-title">@role.Title</h5>
+            <p class="card-text">@role.Description</p>
+        </div>
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Time estimated: @role.Time</li>
+            @if (!(role.ResponsibleUser is null))
+            {
+                <li class="list-group-item">Responsible user: @role.ResponsibleUser.UserName</li>
+            }
+            @if (!(role.Owner is null))
+            {
+                <li class="list-group-item">Creator: @role.Owner.UserName</li>
+            }
+        </ul>
+        <div class="card-body">
+            <a asp-action="Edit" asp-route-taskId="@role.Id" class="card-link">Edit</a>
+            <a asp-action="Delete" asp-route-taskId="@role.Id" class="card-link">Delete</a>
+        </div>
+    </div> *@
