@@ -45,16 +45,7 @@ namespace KanbanBoard
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
             services.Configure<SMSoptions>(Configuration);
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(
-                    "DeletePolicy",
-                    policy =>
-                    {
-                        policy.RequireClaim("Id");
-                        policy.RequireRole("Organizer,Team Player");
-                    });
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

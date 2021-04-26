@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using KanbanBoard.Data;
 using KanbanBoard.Models;
@@ -11,7 +12,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace KanbanBoard.Controllers
 {
-    [Authorize(Roles = "Organizer,TeamPlayer,Contributer,Observer")]
+    [Authorize(Roles = "Organizer,Team Player,Contributor,Observer,UltraAdmin")]
     public class ViewTasksController : Controller
     {
         private ApplicationDbContext _context;
@@ -37,7 +38,14 @@ namespace KanbanBoard.Controllers
         [Authorize(Roles = "Team Player,Contributor,Organizer,UltraAdmin")]
         public IActionResult Delete(KanbanTask task)
         {
-            if(task.OwnerRefId ==)
+            if (!(User.IsInRole("Organizer") || (User.IsInRole("Team Player"))))
+            {
+                if (HttpContext.User.Claims.Where(u => u.Type == "Id").Select(u => u.Value == task.OwnerRefId).Any())
+                {
+                    throw new FormatException();
+                }
+                throw new Exception();
+            }
             throw new NotImplementedException();
         }
     }
