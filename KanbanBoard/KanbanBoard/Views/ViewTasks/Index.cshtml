@@ -4,90 +4,93 @@
     ViewData["Title"] = "View Kanban tasks";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<table class="table table-striped">
-    <div class="row">
-        <div class="col-sm-4">
-            <h3>TO DO</h3>
-            @foreach (var role in Model.Tasks.Where(T => T.Movement.Contains("To Do")))
-            {
-                <div class="card mb-3" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">@role.Title</h5>
-                        <p class="card-text">@role.Description</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Time estimated: @role.Time</li>
-                        @if (!(role.ResponsibleUser is null))
-                        {
-                            <li class="list-group-item">Responsible user: @role.ResponsibleUser.UserName</li>
-                        }
-                        @if (!(role.Owner is null))
-                        {
-                            <li class="list-group-item">Creator: @role.Owner.UserName</li>
-                        }
-                    </ul>
-                    <div class="card-body">
-                        <a asp-action="Edit" asp-route-taskId="@role.Id" class="card-link">Edit</a>
-                        <a asp-action="Delete" asp-route-taskId="@role.Id" class="card-link">Delete</a>
-                    </div>
-                </div>
-            }
-        </div>
-        <div class="col-sm-4">
-            <h3>DOING</h3>
-            @foreach (var role in Model.Tasks.Where(T => T.Movement.Contains("Doing")))
-            {
-                <div class="card mb-3" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">@role.Title</h5>
-                        <p class="card-text">@role.Description</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Time estimated: @role.Time</li>
-                        @if (!(role.ResponsibleUser is null))
-                        {
-                            <li class="list-group-item">Responsible user: @role.ResponsibleUser.UserName</li>
-                        }
-                        @if (!(role.Owner is null))
-                        {
-                            <li class="list-group-item">Creator: @role.Owner.UserName</li>
-                        }
-                    </ul>
-                    <div class="card-body">
-                        <a asp-action="Edit" asp-route-taskId="@role.Id" class="card-link">Edit</a>
-                        <a asp-action="Delete" asp-route-taskId="@role.Id" class="card-link">Delete</a>
-                    </div>
-                </div>
-            }
-        </div>
-        <div class="col-sm-4">
-            <h3>DONE</h3>
-            @foreach (var role in Model.Tasks.Where(T => T.Movement.Contains("Done")))
-            {
-                <div class="card mb-3" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">@role.Title</h5>
-                        <p class="card-text">@role.Description</p>
-                    </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">Time estimated: @role.Time</li>
-                        @if (!(role.ResponsibleUser is null))
-                        {
-                            <li class="list-group-item">Responsible user: @role.ResponsibleUser.UserName</li>
-                        }
-                        @if (!(role.Owner is null))
-                        {
-                            <li class="list-group-item">Creator: @role.Owner.UserName</li>
-                        }
-                    </ul>
-                    <div class="card-body">
-                        <a asp-action="Edit" asp-route-taskId="@role.Id" class="card-link">Edit</a>
-                        <a asp-action="Delete" asp-route-taskId="@role.Id" class="card-link">Delete</a>
-                    </div>
-                </div>
-            }
-        </div>
-    </div>
+<form method="get">
+    <button asp-action="Create" style="width:auto" class="btn btn-primary"
+            style="width:auto">
+        Create a Task
+    </button>
+</form>
     
-</table>
+<div class="row">
+    <div class="col-sm-4">
+        <h3>TO DO</h3>
+        @foreach (var role in Model.Tasks.Where(T => T.Movement.Contains("To Do")))
+        {
+            <div class="card mb-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@role.Title</h5>
+                    <p class="card-text">@role.Description</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Time estimated: @role.Time</li>
+                    @if (!(role.ResponsibleUser is null))
+                    {
+                        <li class="list-group-item">Responsible user: @role.ResponsibleUser.UserName</li>
+                    }
+                    @if (!(role.Owner is null))
+                    {
+                        <li class="list-group-item">Creator: @role.Owner.UserName</li>
+                    }
+                </ul>
+                <div class="card-body">
+                    <a asp-action="Edit" asp-route-taskId="@role.Id" class="card-link">Edit</a>
+                    <a asp-action="Delete" asp-route-taskId="@role.Id" class="card-link">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-sm-4">
+        <h3>DOING</h3>
+        @foreach (var role in Model.Tasks.Where(T => T.Movement.Contains("Doing")))
+        {
+            <div class="card mb-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@role.Title</h5>
+                    <p class="card-text">@role.Description</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Time estimated: @role.Time</li>
+                    @if (!(role.ResponsibleUser is null))
+                    {
+                        <li class="list-group-item">Responsible user: @role.ResponsibleUser.UserName</li>
+                    }
+                    @if (!(role.Owner is null))
+                    {
+                        <li class="list-group-item">Creator: @role.Owner.UserName</li>
+                    }
+                </ul>
+                <div class="card-body">
+                    <a asp-action="Edit" asp-route-taskId="@role.Id" class="card-link">Edit</a>
+                    <a asp-action="Delete" asp-route-taskId="@role.Id" class="card-link">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-sm-4">
+        <h3>DONE</h3>
+        @foreach (var role in Model.Tasks.Where(T => T.Movement.Contains("Done")))
+        {
+            <div class="card mb-3" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">@role.Title</h5>
+                    <p class="card-text">@role.Description</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Time estimated: @role.Time</li>
+                    @if (!(role.ResponsibleUser is null))
+                    {
+                        <li class="list-group-item">Responsible user: @role.ResponsibleUser.UserName</li>
+                    }
+                    @if (!(role.Owner is null))
+                    {
+                        <li class="list-group-item">Creator: @role.Owner.UserName</li>
+                    }
+                </ul>
+                <div class="card-body">
+                    <a asp-action="Edit" asp-route-taskId="@role.Id" class="card-link">Edit</a>
+                    <a asp-action="Delete" asp-route-taskId="@role.Id" class="card-link">Delete</a>
+                </div>
+            </div>
+        }
+    </div>
+</div>

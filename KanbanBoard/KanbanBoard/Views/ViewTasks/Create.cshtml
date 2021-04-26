@@ -1,0 +1,64 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model KanbanTask
+@{
+    ViewData["Title"] = "Edit Task";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form method="post">
+    <div class="card">
+        <div class="card-header">
+            <h2>Edit Task:</h2>
+            <h3>@Model.Title</h3>
+        </div>
+        <div class="card-body form-check m-1">
+            <h5 class="card-title">Title: <input asp-for="@Model.Title" /></h5>
+            <input type="hidden" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.ResponsibleUser" />
+            <input type="hidden" asp-for="@Model.Owner" />
+            <table class="table table-striped">
+                <tbody>
+                    <tr>
+                        <th>Description:</th>
+                        <td><p class="card-text"><input asp-for="@Model.Description" /></p></td>
+                    </tr>
+                    <tr>
+                        <th>Time estimated:</th>
+                        <td><p class="card-text"><input asp-for="@Model.Time" /></p></td>
+                    </tr>
+                    <tr>
+                        <th>Category:</th>
+                        <td>
+                            @Html.DropDownList("Movement", new List<SelectListItem>
+                                             {   new SelectListItem{ Text="To Do", Value = "To Do" },
+                                                 new SelectListItem{ Text="Doing", Value = "Doing" },
+                                                 new SelectListItem{ Text="Done", Value = "Done" } })
+                    </td>
+                </tr>
+                <tr>
+                    <th>
+                        <label class="form-check-label" asp-for="@Model.ResponsibleUser">
+                            @(Model.ResponsibleUser is null ? "Responsible user" : Model.ResponsibleUser.ToString()):
+                        </label>
+                    </th>
+                    <td>
+                        <select Name="ResponsibleUserRefId">
+                            @foreach (IdentityUser user in ViewBag.Users)
+                            {
+                                <option value="@user.Id">@user</option>
+                            }
+                        </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div asp-validation-summary="All" class="text-danger"></div>
+    </div>
+    <div class="card-footer">
+        <input type="submit" value="Create" class="btn btn-primary"
+               style="width:auto" />
+        <a asp-action="Index" asp-route-id="@ViewBag.userId"
+           class="btn btn-primary" style="width:auto">Cancel</a>
+    </div>
+</div>
+</form>

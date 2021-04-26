@@ -14,7 +14,6 @@
         <div class="card-body form-check m-1">
             <h5 class="card-title">Title: <input asp-for="@Model.Title" /></h5>
             <input type="hidden" asp-for="@Model.Id" />
-            <input type="hidden" asp-for="@Model.ResponsibleUser" />
             <input type="hidden" asp-for="@Model.Owner" />
             <table class="table table-striped">
                 <tbody>
@@ -48,8 +47,6 @@
                                 }
                             </select>
                         </td>
-                        @*@Html.DropDownList("ResponsibleUser", (List<SelectListItem>)ViewBag.Users)
-        asp-items="@(new SelectList(ViewBag.Users,"ResponsibleUser","Email"))"*@
                     </tr>
                 </tbody>
             </table>
@@ -63,34 +60,3 @@
         </div>
     </div>
 </form>
-
-@*<table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">First</th>
-          <th scope="col">Last</th>
-          <th scope="col">Handle</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr>
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-        </tr>
-        <tr>
-          <th scope="row">3</th>
-          <td>Larry</td>
-          <td>the Bird</td>
-          <td>@twitter</td>
-        </tr>
-      </tbody>
-    </table> *@

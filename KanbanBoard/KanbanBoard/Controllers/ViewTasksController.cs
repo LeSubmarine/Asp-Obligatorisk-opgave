@@ -31,6 +31,24 @@ namespace KanbanBoard.Controllers
             return View(TaskManager);
         }
 
+        [Authorize(Roles = "Team Player,Contributor,Organizer,UltraAdmin")]
+        [HttpGet]
+        public IActionResult Create()
+        {
+            ViewBag.Users = _context.Users.ToArray();
+            return View(new KanbanTask());
+        }
+
+        [Authorize(Roles = "Team Player,Contributor,Organizer,UltraAdmin")]
+        [HttpPost]
+        public IActionResult Create([FromForm] KanbanTask task)
+        {
+            task.OwnerRefId =
+                _signInContext.UserManager.GetUserId(User);
+            task.Owner = _context.Users.Find(task.OwnerRefId);
+            TaskManager.CreateTaskAsync(task);
+            return RedirectToAction("Index");
+        }
 
         [Authorize(Roles = "Team Player,Contributor,Organizer,UltraAdmin")]
         [HttpGet]
