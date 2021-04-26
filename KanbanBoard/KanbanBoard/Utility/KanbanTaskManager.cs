@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Linq;
 using System.Threading.Tasks;
 using KanbanBoard.Data;
@@ -39,6 +40,12 @@ namespace KanbanBoard.Utility
         public void DeleteTask(KanbanTask task)
         {
             _context.KanbanTasks.Remove(task);
+            _context.SaveChanges();
+        }
+
+        public void UpdateTask(KanbanTask task)
+        {
+            _context.KanbanTasks.Update(task);
             _context.SaveChanges();
         }
     }

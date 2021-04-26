@@ -30,23 +30,56 @@ namespace KanbanBoard.Controllers
             return View(TaskManager);
         }
 
-        public IActionResult Edit(KanbanTask task)
-        {
-            throw new NotImplementedException();
-        }
 
         [Authorize(Roles = "Team Player,Contributor,Organizer,UltraAdmin")]
-        public IActionResult Delete(int taskId)
+        [HttpGet]
+        public IActionResult Edit(int taskId)
         {
             if (!(User.IsInRole("Organizer") || (User.IsInRole("Team Player"))))
             {
-                if (_signInContext.UserManager.GetUserId(User) == TaskManager.Tasks.Where(a => a.Id == taskId).First().OwnerRefId)
+                if (_signInContext.UserManager.GetUserId(User) == TaskManager.Tasks.Where(a => a.Id == taskId)?.First()?.OwnerRefId)
                 {
                     throw new FormatException();
                 }
                 throw new Exception();
             }
             throw new NotImplementedException();
+        }
+
+        [Authorize(Roles = "Team Player,Contributor,Organizer,UltraAdmin")]
+        [HttpPost]
+        public IActionResult Edit(KanbanTask task)
+        {
+            if (!(User.IsInRole("Organizer") || (User.IsInRole("Team Player"))))
+            {
+                if (_signInContext.UserManager.GetUserId(User) == TaskManager.Tasks.Where(a => a.Id == task.Id)?.First()?.OwnerRefId)
+                {
+                    throw new FormatException();
+                }
+                throw new Exception();
+            }
+
+            TaskManager.UpdateTask(task);
+
+            return RedirectToAction("Index");
+        }
+
+
+        [Authorize(Roles = "Team Player,Contributor,Organizer,UltraAdmin")]
+        public IActionResult Delete(int taskId)
+        {
+            if (!(User.IsInRole("Organizer") || (User.IsInRole("Team Player"))))
+            {
+                if (_signInContext.UserManager.GetUserId(User) == TaskManager.Tasks.Where(a => a.Id == taskId)?.First()?.OwnerRefId)
+                {
+                    TaskManager.DeleteTask(TaskManager.Tasks.Find(a => a.Id == taskId));
+                    return RedirectToAction("Index");
+                }
+
+                return RedirectToAction("Index");
+            }
+            TaskManager.DeleteTask(TaskManager.Tasks.Find(a=>a.Id == taskId));
+            return RedirectToAction("Index");
         }
     }
 }
